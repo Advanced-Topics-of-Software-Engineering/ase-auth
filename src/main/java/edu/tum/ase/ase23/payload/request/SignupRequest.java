@@ -21,15 +21,11 @@ public class SignupRequest {
     @Size(min = 6, max = 40)
     private String password;
 
-    @NotBlank
-    private String RFIDToken;
-
-    public SignupRequest(String username, String email, String password, String userType, String RFIDToken) {
+    public SignupRequest(String username, String email, String password, String userType) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.userType = userType;
-        this.RFIDToken = RFIDToken;
     }
 
     public String getUsername() {
@@ -64,11 +60,4 @@ public class SignupRequest {
         this.userType = userType;
     }
 
-    public String getRFIDToken() {
-        return this.RFIDToken;
-    }
-
-    public void setRFIDToken(String RFIDToken) {
-        this.RFIDToken = RFIDToken;
-    }
 }
