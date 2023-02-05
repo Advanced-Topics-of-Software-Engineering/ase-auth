@@ -19,23 +19,23 @@ import java.util.List;
 @RequestMapping("/box")
 public class BoxController {
 
-    @Autowired
-    UserService userService;
-    @Value("${edu.tum.ase.ase23.app.boxSecret}")
-    private String boxSecret;
+//    @Autowired
+//    UserService userService;
+//    @Value("${edu.tum.ase.ase23.app.boxSecret}")
+//    private String boxSecret;
 
-    @GetMapping("/get_user/{boxId}")
-    public ResponseEntity<?> GetUserId(@Valid @RequestBody BoxRequest boxRequest, @RequestHeader HttpHeaders headers) throws Exception {
-        String authenticationKey = headers.toSingleValueMap().get("x-authentication");
-        if (!authenticationKey.equals(boxSecret)) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Unauthorized request!"));
-        }
-
-        User user = userService.getUserByRFIDToken(boxRequest.getRFIDToken()).orElseThrow(
-                () -> new UserRFIDTokenNotFoundException("User cannot find by rfid token" + boxRequest.getRFIDToken()));
-
-        return ResponseEntity.ok().body(user);
-    }
+//    @GetMapping("/get_user/{boxId}")
+//    public ResponseEntity<?> GetUserId(@Valid @RequestBody BoxRequest boxRequest, @RequestHeader HttpHeaders headers) throws Exception {
+//        String authenticationKey = headers.toSingleValueMap().get("x-authentication");
+//        if (!authenticationKey.equals(boxSecret)) {
+//            return ResponseEntity.badRequest().body(new MessageResponse("Error: Unauthorized request!"));
+//        }
+//
+//        User user = userService.getUserByRFIDToken(boxRequest.getRFIDToken()).orElseThrow(
+//                () -> new UserRFIDTokenNotFoundException("User cannot find by rfid token" + boxRequest.getRFIDToken()));
+//
+//        return ResponseEntity.ok().body(user);
+//    }
 
     @GetMapping("")
     @PreAuthorize("hasRole('DISPATCHER')")

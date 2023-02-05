@@ -61,6 +61,7 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 .requestMatchers("/api/auth/signin").permitAll()
+                .requestMatchers("/delivery/box/validate").permitAll()
                 .requestMatchers("/api/auth/signup").authenticated()
                 .requestMatchers("/swagger-ui/**").permitAll()
                 .anyRequest()
