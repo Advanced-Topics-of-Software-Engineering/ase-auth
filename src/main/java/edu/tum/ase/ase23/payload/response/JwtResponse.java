@@ -1,7 +1,5 @@
 package edu.tum.ase.ase23.payload.response;
 
-import java.util.List;
-
 public class JwtResponse {
     private String accessToken;
     private String tokenType = "Bearer";

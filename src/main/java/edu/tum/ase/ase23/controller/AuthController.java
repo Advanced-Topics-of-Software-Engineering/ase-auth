@@ -9,7 +9,6 @@ import edu.tum.ase.ase23.payload.response.MessageResponse;
 import edu.tum.ase.ase23.repository.RoleRepository;
 import edu.tum.ase.ase23.repository.UserRepository;
 import edu.tum.ase.ase23.payload.request.LoginRequest;
-import edu.tum.ase.ase23.security.jwt.AuthEntryPointJwt;
 import edu.tum.ase.ase23.security.jwt.JwtUtils;
 import edu.tum.ase.ase23.security.services.UserDetailsImpl;
 import org.slf4j.Logger;
@@ -21,17 +20,17 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.management.relation.RoleNotFoundException;
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Optional;
+import java.util.List;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -73,11 +72,6 @@ public class AuthController {
     @PostMapping("/signup")
     @PreAuthorize("hasRole('DISPATCHER')")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) throws RoleNotFoundException {
-        logger.info("@@@@@@@@@@@+++++");
-        logger.info(signUpRequest.getEmail() + " " +  signUpRequest.getUsername() + " " + signUpRequest.getPassword());
-        logger.info(userRepository.existsByUsername(signUpRequest.getUsername()).toString());
-        logger.info(userRepository.findByUsername(signUpRequest.getUsername()).toString());
-        logger.info("@@@@@@@@@@@");
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
@@ -89,7 +83,6 @@ public class AuthController {
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already in use!"));
         }
-
         RoleEnum userRoleEnum = RoleEnum.valueOf(signUpRequest.getUserType());
         Role userRole = roleRepository.findByRoleEnum(userRoleEnum).orElseThrow(() -> new RoleNotFoundException("User Not Found with role: " + signUpRequest.getUserType()));
 
@@ -97,8 +90,7 @@ public class AuthController {
         User user = new User(new HashSet<>(Collections.singletonList(userRole)),
                 signUpRequest.getEmail(),
                 signUpRequest.getUsername(),
-                encoder.encode(signUpRequest.getPassword()),
-                signUpRequest.getRFIDToken());
+                encoder.encode(signUpRequest.getPassword()));
 
         userRepository.save(user);
 

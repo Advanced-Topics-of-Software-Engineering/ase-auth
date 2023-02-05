@@ -36,12 +36,11 @@ public class User {
 
     protected User() {}
 
-    public User(Set<Role> roles, String email, String username, String password, String RFIDToken) {
+    public User(Set<Role> roles, String email, String username, String password) {
         this.roles = roles;
         this.email = email;
         this.username = username;
         this.password = password;
-        this.RFIDToken = RFIDToken;
     }
 
     //getters and setters
@@ -86,7 +85,4 @@ public class User {
         return password;
     }
 
-    public void setRFIDToken(String RFIDToken) {
-        this.RFIDToken = RFIDToken;
-    }
 }

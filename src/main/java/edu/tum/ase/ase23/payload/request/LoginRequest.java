@@ -1,12 +1,8 @@
 package edu.tum.ase.ase23.payload.request;
 
-import javax.validation.constraints.NotBlank;
-
 public class LoginRequest {
-    @NotBlank
     private String username;
 
-    @NotBlank
     private String password;
 
     public LoginRequest(String username, String password) {
