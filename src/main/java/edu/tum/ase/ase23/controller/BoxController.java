@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/box")
@@ -22,7 +24,7 @@ public class BoxController {
     @Value("${edu.tum.ase.ase23.app.boxSecret}")
     private String boxSecret;
 
-    @GetMapping("/{boxId}")
+    @GetMapping("/get_user/{boxId}")
     public ResponseEntity<?> GetUserId(@Valid @RequestBody BoxRequest boxRequest, @RequestHeader HttpHeaders headers) throws Exception {
         String authenticationKey = headers.toSingleValueMap().get("x-authentication");
         if (!authenticationKey.equals(boxSecret)) {
@@ -35,4 +37,53 @@ public class BoxController {
         return ResponseEntity.ok().body(user);
     }
 
+    @GetMapping("")
+    @PreAuthorize("hasRole('DISPATCHER')")
+    public ResponseEntity<?> getAllBoxes() {
+        return ResponseEntity.ok(new MessageResponse("Success: Access Granted!"));
+    }
+
+    @PostMapping("")
+    @PreAuthorize("hasRole('DISPATCHER')")
+    public ResponseEntity<?> createBox() {
+        return ResponseEntity.ok(new MessageResponse("Success: Access Granted!"));
+    }
+
+    @GetMapping("/name/{Name}")
+    @PreAuthorize("hasRole('DISPATCHER')")
+    public ResponseEntity<?> findBoxByName(@PathVariable String Name) throws Exception {
+        return ResponseEntity.ok(new MessageResponse("Success: Access Granted!"));
+    }
+
+    @GetMapping("/address/{StreetAddress}")
+    @PreAuthorize("hasRole('DISPATCHER')")
+    public ResponseEntity<?> findBoxByStreetAddress(@PathVariable String StreetAddress)  {
+        return ResponseEntity.ok(new MessageResponse("Success: Access Granted!"));
+    }
+
+    @GetMapping("/{Id}")
+    @PreAuthorize("hasRole('DISPATCHER')")
+    public ResponseEntity<?> findBoxById(@PathVariable String Id) {
+        return ResponseEntity.ok(new MessageResponse("Success: Access Granted!"));
+    }
+
+    @PostMapping("/update/{Id}")
+    @PreAuthorize("hasRole('DISPATCHER')")
+    public ResponseEntity<?> updateBox(@PathVariable String Id) {
+        return ResponseEntity.ok(new MessageResponse("Success: Access Granted!"));
+    }
+
+    @PostMapping("/delete/{Id}")
+    @PreAuthorize("hasRole('DISPATCHER')")
+    public ResponseEntity<?> deleteBox(@PathVariable String Id)  {
+        return ResponseEntity.ok(new MessageResponse("Success: Access Granted!"));
+    }
+
+    @GetMapping("/available/{userid}")
+    @PreAuthorize("hasRole('DISPATCHER')")
+    public ResponseEntity<?> getAvailableBoxesForCustomer(@PathVariable String userid) {
+        return ResponseEntity.ok(new MessageResponse("Success: Access Granted!"));
+    }
 }
+
+

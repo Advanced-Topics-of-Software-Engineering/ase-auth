@@ -48,20 +48,28 @@ public class DispatcherController {
         if (user.isPresent() && !user.get().getUsername().equals(updatedUser.getUsername())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already taken!"));
         }
-
-        if (editUserRequest.getEmail() != null) {
+        Boolean boolStatus = true;
+        if (editUserRequest.getEmail() != null && !editUserRequest.getEmail().equals(updatedUser.getEmail())) {
             updatedUser.setEmail(editUserRequest.getEmail());
+            boolStatus = false;
         }
         if (editUserRequest.getPassword() != null) {
             updatedUser.setPassword(encoder.encode(editUserRequest.getPassword()));
+            boolStatus = false;
         }
-        if (editUserRequest.getUsername() != null) {
+        if (editUserRequest.getUsername() != null && !editUserRequest.getUsername().equals(updatedUser.getUsername())) {
             updatedUser.setUsername(editUserRequest.getUsername());
+            boolStatus = false;
+        }
+        if (!boolStatus)
+        {
+            userRepository.save(updatedUser);
+            return ResponseEntity.ok(new MessageResponse("Success: User has edited!"));
+        }
+        else {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: No changes made!"));
         }
 
-        userRepository.save(updatedUser);
-
-        return ResponseEntity.ok(new MessageResponse("Success: User has edited!"));
     }
 
     @GetMapping("/get_all_customers")
