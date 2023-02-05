@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/dispatcher")
 @PreAuthorize("hasRole('DISPATCHER')")
@@ -72,15 +72,14 @@ public class DispatcherController {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: There is not any customer registered!"));
         } else {
             return ResponseEntity.ok().body(customers.stream().map(
-                            customer -> new UserResponse(
-                                    customer.getId(),
-                                    customer.getUsername(),
-                                    customer.getEmail(),
-                                    customer.getRFIDToken(),
-                                    customer.getRoles().iterator().next().getRoleEnum().name()
-                            )
+                    customer -> new UserResponse(
+                            customer.getId(),
+                            customer.getUsername(),
+                            customer.getEmail(),
+                            customer.getRFIDToken(),
+                            customer.getRoles().iterator().next().getRoleEnum().name()
                     )
-            );
+            ).collect(Collectors.toList()));
         }
     }
 
@@ -124,25 +123,25 @@ public class DispatcherController {
         }
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/username/{username}")
     public ResponseEntity<?> GetUserByUsername(@PathVariable String username) throws UsernameNotFoundException {
         User user = userService.getUserByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User cannot find by username " + username));
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping("/{email}")
+    @GetMapping("/email/{email}")
     public ResponseEntity<?> GetUserByEmail(@PathVariable String email) throws UserEmailNotFoundException {
         User user = userService.getUserByEmail(email).orElseThrow(() -> new UserEmailNotFoundException("User cannot find by email " + email));
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping("/{userid}")
+    @GetMapping("/userid/{userid}")
     public ResponseEntity<?> GetUserByUserid(@PathVariable String userid) throws UserIdNotFoundException {
         User user = userService.getUserById(userid).orElseThrow(() -> new UserIdNotFoundException("User cannot find by userid" + userid));
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping("/{rfidtoken}")
+    @GetMapping("/rfid/{rfidtoken}")
     public ResponseEntity<?> GetUserByRFIDToken(@PathVariable String rfidtoken) throws UserRFIDTokenNotFoundException {
         User user = userService.getUserByRFIDToken(rfidtoken).orElseThrow(() -> new UserRFIDTokenNotFoundException("User cannot find by rfid token" + rfidtoken));
         return ResponseEntity.ok(user);

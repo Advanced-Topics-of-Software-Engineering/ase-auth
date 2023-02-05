@@ -1,13 +1,16 @@
 package edu.tum.ase.ase23.security.jwt;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import jakarta.servlet.http.HttpServletResponseWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -16,6 +19,8 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import static org.springframework.util.FileCopyUtils.BUFFER_SIZE;
 
 @Component
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {
@@ -38,6 +43,7 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 
         final ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(response.getOutputStream(), body);
+        logger.info("break");
     }
 
 }
