@@ -54,7 +54,7 @@ public class User {
         this.email = email;
         this.username = username;
         this.password = password;
-        this.RFIDToken = MD5(this.id);
+        this.RFIDToken = MD5(username+email);
     }
 
     //getters and setters
