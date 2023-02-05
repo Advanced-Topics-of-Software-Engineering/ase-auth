@@ -91,7 +91,6 @@ public class AuthController {
                 signUpRequest.getEmail(),
                 signUpRequest.getUsername(),
                 encoder.encode(signUpRequest.getPassword()));
-
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
