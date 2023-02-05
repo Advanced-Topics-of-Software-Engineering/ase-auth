@@ -88,10 +88,4 @@ public class DeliveryController {
 
         return ResponseEntity.ok().body(user);
     }
-
-    @PostMapping("/delete/{deliveryID}")
-    public ResponseEntity<?> deleteDelivery(@PathVariable String deliveryID) {
-        return ResponseEntity.ok(new MessageResponse("Success: Access Granted!"));
-    }
-
 }
