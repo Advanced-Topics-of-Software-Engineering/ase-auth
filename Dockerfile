@@ -12,6 +12,6 @@ RUN mvn -f /home/app/ase-auth/pom.xml clean package
 FROM openjdk:19-jdk
 COPY --from=build /home/app/ase-auth/target/ase-auth-0.0.1-SNAPSHOT.jar /app/ase-auth/ase-auth-0.0.1-SNAPSHOT.jar
 RUN chmod +x /app/ase-auth/ase-auth-0.0.1-SNAPSHOT.jar
-EXPOSE 8080
+EXPOSE 8081
 CMD ["java", "-jar", "/app/ase-auth/ase-auth-0.0.1-SNAPSHOT.jar"]
 
