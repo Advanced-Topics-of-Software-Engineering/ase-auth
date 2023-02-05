@@ -26,7 +26,7 @@ public class CorsConfig implements WebMvcConfigurer {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("https://ase-frontend-ti4g3idaca-uc.a.run.app/", "https://ase-deployment-ti4g3idaca-uc.a.run.app/")
+                        .allowedOrigins("https://ase-frontend-ti4g3idaca-uc.a.run.app/", "https://ase-backend-ti4g3idaca-uc.a.run.app/")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(false)
