@@ -85,4 +85,7 @@ public class User {
         return password;
     }
 
+    public void setRFIDToken(@NonNull String RFIDToken) {
+        this.RFIDToken = RFIDToken;
+    }
 }
