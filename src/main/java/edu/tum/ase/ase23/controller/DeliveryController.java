@@ -42,13 +42,19 @@ public class DeliveryController {
     }
 
     @GetMapping("/deliverer/{delivererId}")
-    @PreAuthorize("hasRole('DISPATCHER') and hasRole('DELIVERER')")
-    public ResponseEntity<?> getDeliveriesOfUserFromDelivererId()  {
+    @PreAuthorize("hasRole('DISPATCHER') or hasRole('DELIVERER')")
+    public ResponseEntity<?> getDeliveriesOfUserFromDelivererId(@PathVariable String delivererId)  {
         return ResponseEntity.ok(new MessageResponse("Success: Access Granted!"));
     }
     @GetMapping("/customer/{customerId}")
-    @PreAuthorize("hasRole('DISPATCHER') and hasRole('CUSTOMER')")
+    @PreAuthorize("hasRole('DISPATCHER') or hasRole('CUSTOMER')")
     public ResponseEntity<?> getDeliveriesOfUserFromCustomerId() {
+        return ResponseEntity.ok(new MessageResponse("Success: Access Granted!"));
+    }
+
+    @GetMapping("/deliverer/updateStatus/{trackingID}")
+    @PreAuthorize("hasRole('DISPATCHER') or hasRole('DELIVERER')")
+    public ResponseEntity<?> updateStatusToPickedUpByTrackingID(@PathVariable String trackingID) {
         return ResponseEntity.ok(new MessageResponse("Success: Access Granted!"));
     }
 

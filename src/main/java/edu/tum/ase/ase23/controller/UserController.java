@@ -20,7 +20,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/user")
-@PreAuthorize("hasRole('CUSTOMER') and hasRole('DELIVERER') and hasRole('DISPATCHER')")
+@PreAuthorize("hasRole('CUSTOMER') or hasRole('DELIVERER') and hasRole('DISPATCHER')")
 public class UserController {
 
     @Autowired
