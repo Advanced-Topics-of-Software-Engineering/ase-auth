@@ -35,12 +35,26 @@ public class User {
     private String RFIDToken;
 
     protected User() {}
+    public String MD5(String md5) {
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+            byte[] array = md.digest(md5.getBytes());
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < array.length; ++i) {
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
+            }
+            return sb.toString();
+        } catch (java.security.NoSuchAlgorithmException e) {
+        }
+        return null;
+    }
 
     public User(Set<Role> roles, String email, String username, String password) {
         this.roles = roles;
         this.email = email;
         this.username = username;
         this.password = password;
+        this.RFIDToken = MD5(this.id);
     }
 
     //getters and setters
